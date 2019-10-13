@@ -1,0 +1,42 @@
+#mainArea {
+    margin-top: 200px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+header{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+#btnStart{
+    border-radius: 10px;
+    border: none;
+    width: 100px;
+    background-color: rgb(155, 47, 155);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+
+
+#highscores{
+    float: left;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(155, 47, 155);
+    margin-top: 5px;
+
+}
+
+#highscores-p{
+    cursor: pointer;
+    width: 125px;
+}
+
+#timer{
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    margin-right: -5px;
+    text-align: right;
+}
