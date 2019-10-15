@@ -5,18 +5,42 @@
 
 }
 
+li{
+    list-style: none;
+}
+
 header{
     font-size: 3em;
     font-weight: bold;
 }
 
-#btnStart{
+#btnStart, #submit-button{
     border-radius: 10px;
     border: none;
     width: 100px;
     background-color: rgb(155, 47, 155);
     color: #ffffff;
     cursor: pointer;
+}
+
+#submit-button{
+    margin-left: 10px;
+}
+
+.choice-button{
+    border-radius: 10px;
+    border: none;
+    width: 200px;
+    background-color: rgb(155, 47, 155);
+    color: #ffffff;
+    cursor: pointer;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+}
+
+#questionDIV{
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -26,13 +50,10 @@ header{
     font-family: Arial, Helvetica, sans-serif;
     color: rgb(155, 47, 155);
     margin-top: 5px;
-
-}
-
-#highscores-p{
     cursor: pointer;
-    width: 125px;
+
 }
+
 
 #timer{
     font-family: Arial, Helvetica, sans-serif;

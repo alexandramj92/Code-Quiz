@@ -14,6 +14,24 @@ var questions = [
     },
 
     {
+        title: "An alternative way to write timeleft = timeleft - 1 is : ",
+        choices: ["timeleft --", "timeleft - 1", "timeleft =- 1", "timeleft -= 1"],
+        answer: "timeleft -= 1"
+    },
+
+    {
+        title: "What is the first object in HTML DOM ? ",
+        choices: ["door", "sky", "window", "tree"],
+        answer: "window"
+    },
+
+    {
+        title: "An unordered collection of related data is a(n) ___________.",
+        choices: ["string", "node", "array", "object"],
+        answer: "object"
+    },
+
+    {
         title: "",
         choices: "",
         answer: ""
@@ -26,15 +44,19 @@ var questionEl = document.createElement("h3");
 
 var choice1 = document.createElement ("button");
 choice1.setAttribute ("type","button");
+choice1.setAttribute ("class", "choice-button");
 
 var choice2 = document.createElement ("button");
 choice2.setAttribute ("type","button");
+choice2.setAttribute ("class", "choice-button");
 
 var choice3 = document.createElement("button");
 choice3.setAttribute ("type","button");
+choice3.setAttribute ("class", "choice-button");
 
 var choice4 = document.createElement("button");
 choice4.setAttribute ("type","button");
+choice4.setAttribute ("class", "choice-button");
 
 
 // Initial Page
@@ -48,6 +70,7 @@ var quizEl = document.getElementById("quizArea");
 var brEl = document.createElement("br");
 var questionDIV = document.createElement("div");
 questionDIV.setAttribute ("id", "question-div");
+questionDIV.setAttribute ("class", "col-12");
 var quizCont = document.getElementById("quiz-container");
 var answerDIV = document.createElement("div");
 answerDIV.setAttribute ("id", "answers");
@@ -69,6 +92,7 @@ initialsInput.setAttribute("id", "initialsInput");
 
 var initialsSubmit = document.createElement ("button");
 initialsSubmit.setAttribute ("type", "submit");
+initialsSubmit.setAttribute ("id","submit-button");
 
 
 // Highscores page elements
@@ -83,9 +107,29 @@ highscoreVal.setAttribute ("id", "highscoreVal");
 
 var clearScores = document.createElement ("button");
 
+var highscoresHTML = document.getElementById("#highscores");
+
+
+
+
 
 
 //Functions and Event Listeners
+
+//Timer elements
+
+var timeLeft = 75;
+
+    var timerInterval = setInterval(function(){
+        document.getElementById("#timer").innerHTML = "Timer: " + timeLeft;
+        timeLeft-= 1;
+        if(timeLeft < 0){
+            clearInterval(timerInterval);
+        }
+    }, 1000);
+
+
+//Event Listener for Start Button
 
 startBtn.addEventListener("click", function(){
     quizEl.innerHTML = "";
@@ -93,8 +137,10 @@ startBtn.addEventListener("click", function(){
 
     quizCont.appendChild(questionDIV);
 
-
     displayquestion();
+    // timerInterval;
+    console.log(timerInterval);
+
 
 
 });
@@ -102,8 +148,10 @@ startBtn.addEventListener("click", function(){
 var questionIndex = 0;
 var wrongAnswer = 0;
 var questionNum = 0;
-var finalScore = 2-wrongAnswer;
+var finalScore = 5-wrongAnswer;
 var highscoresList = [];
+
+
 
 
 
@@ -128,24 +176,7 @@ function displayquestion(){
 
 }
 
-// Display Submission Page Function
-function displaySubmission () {
-    questionEl.innerHTML = "";
-    answerDIV.innerHTML = "";
-    scoreDis.textContent = "All done !";
-    initialsSubmit.textContent = "Submit";
-    scoreValDis.textContent = "Your score is " + finalScore + "!";
 
-    
-
-    questionDIV.appendChild(scoreDis);
-    questionDIV.appendChild(scoreValDis);
-    questionDIV.appendChild(initialsForm);
-    initialsForm.appendChild(initialsInput);
-    initialsForm.appendChild(initialsSubmit);
-    console.log("displaySubmission");
-
-}
 
 
 // Display Highscores Page Function
@@ -174,17 +205,19 @@ function displaySubmission () {
     // quizEl.appendChild(highscoreVal);
  }
 
- function inti(){
+ function init(){
+
      //Get stored todos from localStorage
      //Parsing JSON string to an object
-     var storedHighscores = JSON.parse(localStorage.getItem("highscoresItem"));
-    if (storedTodos !== null){
+     var storedHighscores = JSON.parse(localStorage.getItem("highscoresList"));
+    if (storedHighscores !== null){
         highscoresList = storedHighscores;
     }
 
     displayHighscores();
 
  }
+ 
 
 
  
@@ -192,6 +225,7 @@ function displaySubmission () {
 //checks answer compared to input
 answerDIV.addEventListener("click", function(event){
     event.preventDefault();
+    displayquestion();
     if (event.target.textContent === questions[questionIndex].answer){
         console.log("correct answer");
     }
@@ -203,17 +237,33 @@ answerDIV.addEventListener("click", function(event){
 
     questionIndex ++;
    
-    displayquestion();
 // if you have answered all the questions the submission page is displayed
-    if (questionNum > 2){
+    if (questionNum > 5){
 
         console.log("End of questions!");
         displaySubmission();
     }
 
-
-
 })
+
+// Display Submission Page Function
+function displaySubmission () {
+    questionEl.innerHTML = "";
+    answerDIV.innerHTML = "";
+    scoreDis.textContent = "All done !";
+    initialsSubmit.textContent = "Submit";
+    scoreValDis.textContent = "Your score is " + finalScore + "!";
+
+    
+
+    questionDIV.appendChild(scoreDis);
+    questionDIV.appendChild(scoreValDis);
+    questionDIV.appendChild(initialsForm);
+    initialsForm.appendChild(initialsInput);
+    initialsForm.appendChild(initialsSubmit);
+    console.log("displaySubmission");
+
+}
 
 //function to store initials and score to local storage
 // Renders the Highscores Page
@@ -226,9 +276,6 @@ initialsSubmit.addEventListener("click", function(event){
     var highscore = finalScore;
     localStorage.setItem("initials", initials);
     localStorage.setItem("highscore", highscore);
-
-    // questionDIV.innerHTML = "";
-
      // get these items from local storage
     //  var initials = localStorage.getItem("initials");
     //  var highscore = localStorage.getItem("highscore");
@@ -238,9 +285,22 @@ initialsSubmit.addEventListener("click", function(event){
      // push highscoresItem into the highscoresList array
      highscoresList.push(highscoresItem);
 
-    displayHighscores();
+
+    questionDIV.innerHTML = "";
+
+    
+     init();
+
+
 
 });
 
 
 
+
+// highscoresHTML.addEventListener("click", function(){
+    
+//     console.log("View Highscores clicked");
+//     questionDIV.innerHTML="";
+//     displayHighscores();
+// });
