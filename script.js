@@ -58,6 +58,9 @@ var choice4 = document.createElement("button");
 choice4.setAttribute ("type","button");
 choice4.setAttribute ("class", "choice-button");
 
+var answerNot = document.createElement("div");
+answerNot.setAttribute ("id", "answerNot");
+
 
 // Initial Page
 
@@ -121,12 +124,18 @@ var highscoresHTML = document.getElementById("#highscores");
 var timeLeft = 75;
 
     var timerInterval = setInterval(function(){
+        console.log(document.getElementById("#timer"));
         document.getElementById("#timer").innerHTML = "Timer: " + timeLeft;
+        console.log(timeLeft, "timeLeft");
+        console.log(document.getElementById("#timer"));
+
         timeLeft-= 1;
         if(timeLeft < 0){
             clearInterval(timerInterval);
         }
     }, 1000);
+
+    console.log(timerInterval,"here");
 
 
 //Event Listener for Start Button
@@ -138,8 +147,8 @@ startBtn.addEventListener("click", function(){
     quizCont.appendChild(questionDIV);
 
     displayquestion();
-    // timerInterval;
-    console.log(timerInterval);
+    timerInterval;
+    // console.log(timerInterval);
 
 
 
@@ -228,11 +237,17 @@ answerDIV.addEventListener("click", function(event){
     displayquestion();
     if (event.target.textContent === questions[questionIndex].answer){
         console.log("correct answer");
+
+        answerNot.textContent = "Correct!";
+        questionDIV.appendChild(answerNot);
+
     }
 
     else  {
         wrongAnswer++;
         console.log("wrong answer");
+        answerNot.textContent = "Wrong!"
+        questionDIV.appendChild (answerNot);
     }
 
     questionIndex ++;
