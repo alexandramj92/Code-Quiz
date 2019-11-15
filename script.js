@@ -123,19 +123,8 @@ var highscoresHTML = document.getElementById("#highscores");
 
 var timeLeft = 75;
 
-    var timerInterval = setInterval(function(){
-        console.log(document.getElementById("#timer"));
-        document.getElementById("#timer").innerHTML = "Timer: " + timeLeft;
-        console.log(timeLeft, "timeLeft");
-        console.log(document.getElementById("#timer"));
+  
 
-        timeLeft-= 1;
-        if(timeLeft < 0){
-            clearInterval(timerInterval);
-        }
-    }, 1000);
-
-    console.log(timerInterval,"here");
 
 
 //Event Listener for Start Button
@@ -147,8 +136,18 @@ startBtn.addEventListener("click", function(){
     quizCont.appendChild(questionDIV);
 
     displayquestion();
-    timerInterval;
     // console.log(timerInterval);
+    var timerInterval = setInterval(function(){
+        console.log(document.getElementById("timer"));
+        document.getElementById("timer").innerHTML = "Timer: " + timeLeft;
+        console.log(timeLeft, "timeLeft");
+        console.log(document.getElementById("#timer"));
+
+        timeLeft-= 1;
+        if(timeLeft < 0){
+            clearInterval(timerInterval);
+        }
+    }, 1000);
 
 
 
@@ -190,6 +189,8 @@ function displayquestion(){
 
 // Display Highscores Page Function
 
+init();
+
  function displayHighscores () {
     highscoreDis.textContent = "High Scores";
     quizEl.appendChild(highscoreDis);
@@ -223,9 +224,9 @@ function displayquestion(){
         highscoresList = storedHighscores;
     }
 
-    displayHighscores();
 
  }
+ 
  
 
 
@@ -233,13 +234,14 @@ function displayquestion(){
 
 //checks answer compared to input
 answerDIV.addEventListener("click", function(event){
+    
     event.preventDefault();
-    displayquestion();
+
     if (event.target.textContent === questions[questionIndex].answer){
         console.log("correct answer");
 
         answerNot.textContent = "Correct!";
-        questionDIV.appendChild(answerNot);
+        quizCont.appendChild(answerNot);
 
     }
 
@@ -247,10 +249,11 @@ answerDIV.addEventListener("click", function(event){
         wrongAnswer++;
         console.log("wrong answer");
         answerNot.textContent = "Wrong!"
-        questionDIV.appendChild (answerNot);
+        quizCont.appendChild (answerNot);
     }
-
     questionIndex ++;
+    displayquestion();
+
    
 // if you have answered all the questions the submission page is displayed
     if (questionNum > 5){
@@ -296,15 +299,18 @@ initialsSubmit.addEventListener("click", function(event){
     //  var highscore = localStorage.getItem("highscore");
      // display local storage items as follows
      var highscoresItem = "user: " + initials + " score: " + highscore;
-     localStorage.setItem("highscoresItem", JSON.stringify(highscoresItem));
-     // push highscoresItem into the highscoresList array
      highscoresList.push(highscoresItem);
+    
+
+     localStorage.setItem("highscoresList", JSON.stringify(highscoresList));
+     // push highscoresItem into the highscoresList array
 
 
     questionDIV.innerHTML = "";
 
+    displayHighscores();
+
     
-     init();
 
 
 

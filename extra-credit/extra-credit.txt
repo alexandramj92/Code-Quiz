@@ -1,0 +1,321 @@
+﻿Node.js Tutorial for Beginners: Learn Node in 1 Hour | Mosh
+
+
+Node.js is an open source cross platform runtime environment for executing javascript code outside of a browser.
+
+
+Builds back-end services ( APIs) 
+
+
+Good for building highly scalable data-intensive and real-time back end services
+
+
+It’s easy to get started
+Good for prototyping
+Superfast and highly scalable
+
+
+Cleaner and more consistent because you can use javascript for front end and back end
+
+
+Large ecosystem of open-source libraries 
+
+
+Node Architecture
+
+
+Browser provides the runtime environment for javascript code. 
+
+
+Embedded chrome v8 into C++ program which gave birth to Node. 
+
+
+Has objects that provide environment for javascript code
+File system
+
+
+Node is not a programming language or a framework. 
+
+
+How Node Works
+
+
+Non-blocking asynchronous architecture
+
+
+Single thread is used to handle multiple requests.
+
+
+Event Queue holds the requests. 
+
+
+Node should not be used for CPU-intensive apps.
+
+
+Good for data intensive and real time applications. 
+
+
+If you console.log objects specific to the browser such as window in Node, you will get a message saying that object is undefined. This is proof that Node does not run in the browser. 
+
+
+Node Module System
+* Os
+* Fs
+* Events
+* Http
+
+
+Global Object
+
+
+console.log(); // global object
+
+
+setTimeout(); // call function after delay
+
+
+clearTimeout();
+
+
+setInterval(); // repeatedly call a function after an interval
+
+
+clearInterval();
+
+
+Global replaces window
+
+
+global.setTimeout
+
+
+
+
+Modules
+
+
+Issue with global scope - may overwrite variable and function definitions in other files
+
+
+Modularization solves this issue. Make multiple files and the code is scoped to that file/module.
+
+
+You always have a main module. 
+Module is not a global object.
+
+
+How to create and load a new module
+
+
+Create another file
+Making a module public and visible to the outside. 
+
+
+Module export property
+Module.exports.function  = function;
+
+
+Use it in the main module:
+
+
+Var otherfile = require(‘./otherfile.js’);
+
+
+Jshint main.js in the terminal to check for errors.
+
+
+You can export a single function or an object. 
+
+
+Code is wrapped in function at runtime.
+
+Require function is local to each module —> Module wrapper function
+
+
+Path Module (built-in module)
+
+
+Const path = require(‘path’); // load module
+
+
+Var pathObj = path .parse(__filename);
+
+
+console.log(pathObj); // check out what its properties are
+
+
+OS Module
+
+
+Const os = require(‘os’);
+
+
+Var totoalMemory = os.totalmem();
+Var freeMemory = os.freemem();
+
+
+
+
+Template sting - feature that helps build a string without concactanation 
+Console.log(`Total Memory: ${totalMemory}`);
+console.log(`Free Memory: $ {freeMemory}`);
+
+
+We couldn’t get this information before using javascript
+
+
+File System Module 
+
+
+Const fs = require(‘fs’);
+Const files = fs.readdirSync(‘./); returns all files and folders in the current folder
+
+
+fs.readdir(‘./’, function(err, files) {{
+If (err) console.log(‘error’, err);
+Else console.log(‘results’, files);
+);); 
+
+
+Always better to use asynchronous methods!
+
+
+Events Module
+
+
+Event - signal that something has happened on our application
+
+
+Event: New Request 
+
+
+const EventEmitter = require (‘evetns’); // class always capitalize the first word
+Const emitter = new EventEmitter();
+//Raise an event
+emitter.emit(‘messageLogged’); // making a noise, produce signaling
+
+
+Class is like humans and object is like a specific person. 
+
+
+//Register a Listener
+emitter.on(‘message.Logged , function(arg){
+console.log(‘Listerner called’, arg);
+‘);
+
+
+Event Arguments
+
+
+emitter.emit(‘messageLogged’, {id: 1, url:’http://’}); // making a noise, produce signaling
+
+
+Arrow function - get rid of function key word (ar) ⇒ {function}
+
+
+//Raise: logging (data: message)
+
+
+When a function is in a class it becomes a method. 
+
+
+HTTP Module
+
+
+Const http = require(‘http’);
+Const Server = http.createServer();
+server.on(‘connection’), (socket) => {
+console.log(“listening);
+server.listen(3000);
+Express.js Tutorial: Build RESTful APIs with Node and Express | Mosh
+
+
+Http module is not ideal to build complex web applications.
+
+
+The solution is RESTful Services - App is client, under the hood needs to talk to server using http protocol. Representational State Transfer.
+
+
+Http request has a verb/method that determines its type of intention (GET, POST, PUT, DELETE)
+
+
+Using express framework to build a RESTful service in Node.js
+
+
+Const express = require(‘express’);
+Const app = express();
+
+
+app.get(‘/’, (req, res)=>  {   // takes two arguments, gives information about incoming requests
+res.send(‘Hello World’); 
+
+
+});
+
+
+app.get(‘/api/course’,(req, res) => {
+        res.send([1,2,3]);
+});
+app.listen(3000, () => console.log(‘Listening on port 3000));
+Expressjs.com // see properties available to you
+Install Nodemon package - don’t have to restart requests
+
+
+Environment variable 
+
+
+//PORT
+Const port = process.env.PORT || 3000; // listening to port 3000 is the alternative
+
+
+You can have multiple parameters in a route
+
+
+Let - define a variable that we can reset later
+
+
+Const - define a variable permanently 
+
+
+Use Network tab in browser dev tool to double check that error type is 404.
+HTTP Post Request
+Best practice - put all requirements at the top
+
+
+Const Joi = require(‘joi’)’;
+app.use(express.json()); //adding a piece of middleware
+
+
+app.post(‘/api/courses’), (req, res) => {
+Const schema = {
+Name: Joi.string().min(3).required()
+};
+
+
+Joi.validate(req.body, schema);
+console.log(result);
+
+
+if(!req.body.name || req.body.name.length < 3) {
+res.status(400).send(‘Name is required and should be 3 characters minimum’);
+return
+}
+ Const course = {
+        Id: course.length +1
+        Name: req.body.name
+};
+courses.push(course);
+res.send(course);
+});
+
+
+Chrome extension: postman - allows you to create/test new http requests
+
+
+Input Validation - never trust what the client sends you, ALWAYS validate the input
+
+
+Joi package
+
+
+Npm i joi
